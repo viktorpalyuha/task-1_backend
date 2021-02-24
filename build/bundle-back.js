@@ -15,7 +15,7 @@
   \********************/
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-eval("const Dataset = __webpack_require__(/*! ./dataset */ \"./dataset.js\");\nclass Algorithm {\n  constructor() {\n    this.algorithmData = Dataset.getData;\n  }\n}\n\nmodule.exports.getData = (_, res) => {\n  res.status(200).json({\n    data: new Algorithm().algorithmData\n  });\n};\n\n\n//# sourceURL=webpack://back-end/./classes.js?");
+eval("const Dataset = __webpack_require__(/*! ./dataset */ \"./dataset.js\");\nclass Algorithm {\n  constructor() {\n    this.algorithmData = Dataset.getData;\n  }\n}\n\nclass Sort extends Algorithm {\n  constructor() {\n    super();\n  }\n\n  create(type) {\n    let algorithm;\n\n    switch (type) {\n      case 'bubble':\n        algorithm = new BubbleSort(this.data);\n        break;\n      case 'insertion':\n        algorithm = new InsertionSort(this.data);\n        break;\n      case 'selection':\n        algorithm = new SelectionSort(this.data);\n        break;\n      case 'quick':\n        algorithm = new QuickSort(this.data);\n        break;\n    }\n    algorithm.type = type;\n    return algorithm;\n  }\n}\n\nclass BubbleSort {\n\n}\n\nclass InsertionSort {\n\n}\n\nclass SelectionSort {\n\n}\n\nclass QuickSort {\n\n}\n\nmodule.exports.getData = (_, res) => {\n  res.status(200).json({\n    data: new Sort().algorithmData\n  });\n};\n\n\n//# sourceURL=webpack://back-end/./classes.js?");
 
 /***/ }),
 

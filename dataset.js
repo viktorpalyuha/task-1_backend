@@ -11,7 +11,4 @@ class Dataset {
   }
 }
 
-console.log(Dataset._data)
-
-
 module.exports = new Dataset();

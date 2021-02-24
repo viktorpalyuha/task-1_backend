@@ -161,23 +161,37 @@ class Search extends Algorithm {
 
     switch (type) {
       case 'linear':
-        algorithm = new LinearSearch();
+        algorithm = new LinearSearch(this.algorithmData);
         break;
       case 'binary':
-        algorithm = new BinarySearch();
+        algorithm = new BinarySearch(this.algorithmData);
         break;
       case 'jump':
-        algorithm = new JumpSearch();
+        algorithm = new JumpSearch(this.algorithmData);
         break;
       case 'interpolation':
-        algorithm = new InterpolationSearch();
+        algorithm = new InterpolationSearch(this.algorithmData);
         break;
     }
     return algorithm;
   }
 }
 
-class LinearSearch {}
+class LinearSearch {
+  constructor(data) {
+    this.data = data;
+  }
+
+  search(target) {
+    let regEx = new RegExp(target, 'gmi');
+    for (let i = 0; i < this.data.length; i++) {
+      if (regEx.test(this.data[i].make_display)) {
+        return this.data[i];
+      }
+    }
+    return 'No target found';
+  }
+}
 
 class BinarySearch {}
 
@@ -186,8 +200,8 @@ class JumpSearch {}
 class InterpolationSearch {}
 
 module.exports.getData = (_, res) => {
-  const sortFactory = new Sort();
-  let quick = sortFactory.create('quick');
+  const searchFactory = new Search();
+  let linear = searchFactory.create('linear');
 
-  res.status(200).json(quick.sort());
+  res.status(200).json(linear.search('xedos'));
 };

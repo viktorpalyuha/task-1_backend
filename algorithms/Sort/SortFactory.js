@@ -1,7 +1,7 @@
-const BubbleSort = require('../index').BubbleSort;
-const InsertionSort = require('../index').InsertionSort;
-const SelectionSort = require('../index').SelectionSort;
-const QuickSort = require('../index').QuickSort;
+const BubbleSort = require('./Bubble');
+const InsertionSort = require('./Insertion');
+const SelectionSort = require('./Selection');
+const QuickSort = require('./Quick');
 
 class Sort {
   static create(type) {
@@ -21,9 +21,9 @@ class Sort {
         algorithm = new QuickSort();
         break;
     }
-    
+
     return algorithm;
   }
 }
 
-module.exports = new Sort();
+module.exports = Sort;

@@ -1,4 +1,4 @@
-const Dataset = require('./dataset');
+const Dataset = require('../../dataset');
 
 class Algorithm {
   constructor() {

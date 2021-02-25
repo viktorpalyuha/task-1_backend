@@ -1,4 +1,4 @@
-const Algorithm = require('../index').Algorithm;
+const Algorithm = require('../Algorithm/Algorithm');
 
 class QuickSort extends Algorithm {
   constructor() {

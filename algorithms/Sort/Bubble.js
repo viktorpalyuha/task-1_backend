@@ -6,21 +6,21 @@ class BubbleSort extends Algorithm {
   }
 
   sort() {
-    for (let i = 0; i < this.data.length; i++) {
-      for (let j = 0; j < this.data.length; j++) {
+    for (let i = 0; i < this.algorithmData.length; i++) {
+      for (let j = 0; j < this.algorithmData.length; j++) {
         if (
-          this.data[j + 1] &&
-          this.data[j].make_display.toLowerCase() >
-            this.data[j + 1].make_display.toLowerCase()
+          this.algorithmData[j + 1] &&
+          this.algorithmData[j].make_display.toLowerCase() >
+            this.algorithmData[j + 1].make_display.toLowerCase()
         ) {
-          const temp = this.data[j];
-          this.data[j] = this.data[j + 1];
-          this.data[j + 1] = temp;
+          const temp = this.algorithmData[j];
+          this.algorithmData[j] = this.algorithmData[j + 1];
+          this.algorithmData[j + 1] = temp;
         }
       }
     }
 
-    return this.data;
+    return this.algorithmData;
   }
 }
 

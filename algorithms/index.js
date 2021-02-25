@@ -4,6 +4,11 @@ const BubbleSort = require('./Sort/Bubble');
 const InsertionSort = require('./Sort/Insertion');
 const SelectionSort = require('./Sort/Selection');
 const QuickSort = require('./Sort/Quick');
+const SearchFactory = require('./Search/SearchFactory');
+const LinearSearch = require('./Search/Linear');
+const BinarySearch = require('./Search/Binary');
+const JumpSearch = require('./Search/Jump');
+const InterpolationSearch = require('./Search/Interpolation');
 
 module.exports = {
   Algorithm,
@@ -11,5 +16,10 @@ module.exports = {
   BubbleSort,
   InsertionSort,
   SelectionSort,
-  QuickSort
+  QuickSort,
+  SearchFactory,
+  LinearSearch,
+  BinarySearch,
+  JumpSearch,
+  InterpolationSearch
 };

@@ -16,7 +16,6 @@ class TernarySearch extends Algorithm {
       let mid1 = Math.floor(low + (high - low) / 3);
       let mid2 = Math.floor(high - (high - low) / 3);
 
-      console.log(mid1, mid2);
       if (arr[mid1].make_display.toLowerCase() === lowerCaseTarget) {
         return arr[mid1];
       }

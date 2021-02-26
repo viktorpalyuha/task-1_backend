@@ -48,21 +48,20 @@ class InterpolationSearch extends Algorithm {
     let low = 0;
     let high = this.algorithmData.length - 1;
     let countedTarget = countStr(target);
-    let position = 0;
-    let delta = 0;
 
     while (
       low <= high &&
       target >= this.algorithmData[low].make_display &&
       target <= this.algorithmData[high].make_display
     ) {
-      delta = Math.abs(
-        (countedTarget - countStr(this.algorithmData[low].make_display)) /
-          countStr(this.algorithmData[high].make_display) -
-          countStr(this.algorithmData[low].make_display)
-      );
-      position = low + Math.floor((high - low) * delta);
-      console.log(position);
+      let position =
+        low +
+        Math.floor(
+          ((high - low) *
+            (countedTarget - countStr(this.algorithmData[low].make_display))) /
+            (countStr(this.algorithmData[high].make_display) -
+              countStr(this.algorithmData[low].make_display))
+        );
 
       if (this.algorithmData[position].make_display === target) {
         return this.algorithmData[position];

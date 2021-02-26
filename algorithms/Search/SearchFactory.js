@@ -1,7 +1,7 @@
 const LinearSearch = require('./Linear');
 const BinarySearch = require('./Binary');
 const JumpSearch = require('./Jump');
-const InterpolationSearch = require('./Interpolation');
+const TernarySearch = require('./Ternary');
 
 class Search {
   static create(type) {
@@ -17,8 +17,8 @@ class Search {
       case 'jump':
         algorithm = new JumpSearch();
         break;
-      case 'interpolation':
-        algorithm = new InterpolationSearch();
+      case 'ternary':
+        algorithm = new TernarySearch();
         break;
     }
     return algorithm;

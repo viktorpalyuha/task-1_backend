@@ -5,7 +5,7 @@ class QuickSort extends Algorithm {
     super();
   }
 
-  sort(arr = this.data, start = 0, end = arr.length) {
+  sort(arr = this.algorithmData, start = 0, end = arr.length) {
     function pivot(arr, start = 0, end = arr.length + 1) {
       function swap(arr, firstIndex, secondIndex) {
         if (arr[secondIndex]) {

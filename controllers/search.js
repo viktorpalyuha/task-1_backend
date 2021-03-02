@@ -17,5 +17,7 @@ module.exports.searchData = (req, res) => {
   }
 
   const searchingAlgorithm = SearchFactory.create(algorithmName);
-  return res.status(200).json(searchingAlgorithm.search(target));
+  let y = searchingAlgorithm.search(target);
+
+  return res.status(200).json(y);
 };

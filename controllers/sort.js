@@ -1,6 +1,6 @@
 const SortFactory = require('../algorithms/index').SortFactory;
 
-module.exports.sortData = function (req, res) {
+module.exports.sortData = (req, res) => {
   const { algorithmName } = req.query;
 
   if (!algorithmName) {

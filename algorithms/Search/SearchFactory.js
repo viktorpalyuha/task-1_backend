@@ -1,7 +1,7 @@
-const LinearSearch = require('../index').LinearSearch;
-const BinarySearch = require('../index').BinarySearch;
-const JumpSearch = require('../index').JumpSearch;
-const InterpolationSearch = require('../index').InterpolationSearch;
+const LinearSearch = require('./Linear');
+const BinarySearch = require('./Binary');
+const JumpSearch = require('./Jump');
+const InterpolationSearch = require('./Interpolation');
 
 class Search {
   static create(type) {
@@ -25,4 +25,4 @@ class Search {
   }
 }
 
-module.exports = new Search();
+module.exports = Search;

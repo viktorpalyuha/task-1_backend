@@ -1,5 +1,4 @@
 import { Controller, Get, Param } from '@nestjs/common';
-import { NextFunction } from 'express';
 import { Data } from 'src/interfaces/data.interface';
 import { GameManagerService } from './game-manager.service';
 
@@ -13,11 +12,7 @@ export class GameManagerController {
   }
 
   @Get('/game/:name')
-  getGameByName(@Param('name') name: string, next: NextFunction): Data[] {
-    if (!name) {
-      console.log(name);
-      next();
-    }
+  getGameByName(@Param('name') name: string): Data[] {
     return this.gameManagerService.getGameByName(name);
   }
 

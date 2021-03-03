@@ -19,4 +19,10 @@ export class DatasetService {
   getData(): Data[] {
     return this.data;
   }
+
+  getDataByName(name: string): Data[] {
+    return this.data.filter(
+      (game) => game.name.toLowerCase() === name.toLowerCase(),
+    );
+  }
 }

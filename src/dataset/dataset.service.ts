@@ -31,4 +31,14 @@ export class DatasetService {
       game.categories.toLowerCase().includes(category.toLowerCase()),
     );
   }
+
+  sortDataByLowPrice(): Data[] {
+    const dataCopy = [...this.data];
+    return dataCopy.sort((a: Data, b: Data) => a.price - b.price);
+  }
+
+  sortDataByHighPrice(): Data[] {
+    const dataCopy = [...this.data];
+    return dataCopy.sort((a: Data, b: Data) => b.price - a.price);
+  }
 }

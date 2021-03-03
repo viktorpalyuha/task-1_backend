@@ -21,8 +21,14 @@ export class DatasetService {
   }
 
   getDataByName(name: string): Data[] {
-    return this.data.filter(
-      (game) => game.name.toLowerCase() === name.toLowerCase(),
+    return this.data.filter((game: Data) =>
+      game.name.toLowerCase().includes(name.toLowerCase()),
+    );
+  }
+
+  getDataByCategory(category: string): Data[] {
+    return this.data.filter((game: Data) =>
+      game.categories.toLowerCase().includes(category.toLowerCase()),
     );
   }
 }

@@ -9,4 +9,8 @@ export class GameManagerService {
   getGames(): Data[] {
     return this.dataset.getData();
   }
+
+  getGameByName(name: string): Data[] {
+    return this.dataset.getDataByName(name);
+  }
 }

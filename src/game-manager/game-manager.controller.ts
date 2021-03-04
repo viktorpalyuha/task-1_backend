@@ -11,8 +11,13 @@ export class GameManagerController {
     return this.gameManagerService.getGames();
   }
 
-  @Get(':name')
+  @Get('/game/:name')
   getGameByName(@Param('name') name: string): Data[] {
     return this.gameManagerService.getGameByName(name);
+  }
+
+  @Get('/gamesCategory/:category')
+  getGamesByCategory(@Param('category') category: string): Data[] {
+    return this.gameManagerService.getGamesByCategory(category);
   }
 }

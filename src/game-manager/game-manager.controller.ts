@@ -11,22 +11,22 @@ export class GameManagerController {
     return this.gameManagerService.getGames();
   }
 
-  @Get('/game/:name')
-  getGameByName(@Param('name') name: string): Data[] {
-    return this.gameManagerService.getGameByName(name);
-  }
-
-  @Get('/gamesCategory/:category')
-  getGamesByCategory(@Param('category') category: string): Data[] {
-    return this.gameManagerService.getGamesByCategory(category);
-  }
-
-  @Get('/filter')
+  @Get('/sort')
   sortGamesByPrice(@Query('from') from): Data[] {
     if (from === 'low') {
       return this.gameManagerService.sortGamesByLowPrice();
     } else {
       return this.gameManagerService.sortGamesByHighPrice();
     }
+  }
+
+  @Get('/search/:name')
+  getGameByName(@Param('name') name: string): Data[] {
+    return this.gameManagerService.getGameByName(name);
+  }
+
+  @Get('/category/:category')
+  getGamesByCategory(@Param('category') category: string): Data[] {
+    return this.gameManagerService.getGamesByCategory(category);
   }
 }

@@ -17,4 +17,12 @@ export class GameManagerService {
   getGamesByCategory(category: string): Data[] {
     return this.dataset.getDataByCategory(category);
   }
+
+  sortGamesByLowPrice(): Data[] {
+    return this.dataset.sortDataByLowPrice();
+  }
+
+  sortGamesByHighPrice(): Data[] {
+    return this.dataset.sortDataByHighPrice();
+  }
 }

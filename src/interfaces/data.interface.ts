@@ -4,5 +4,5 @@ export interface Data {
   categories: string;
   img_url: string;
   developer: string;
-  price: string;
+  price: number;
 }

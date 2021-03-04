@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { Data } from 'src/interfaces/data.interface';
 import { GameManagerService } from './game-manager.service';
 
@@ -11,12 +11,21 @@ export class GameManagerController {
     return this.gameManagerService.getGames();
   }
 
-  @Get('/game/:name')
+  @Get('/sort')
+  sortGamesByPrice(@Query('from') from): Data[] {
+    if (from === 'low') {
+      return this.gameManagerService.sortGamesByLowPrice();
+    } else {
+      return this.gameManagerService.sortGamesByHighPrice();
+    }
+  }
+
+  @Get('/search/:name')
   getGameByName(@Param('name') name: string): Data[] {
     return this.gameManagerService.getGameByName(name);
   }
 
-  @Get('/gamesCategory/:category')
+  @Get('/category/:category')
   getGamesByCategory(@Param('category') category: string): Data[] {
     return this.gameManagerService.getGamesByCategory(category);
   }

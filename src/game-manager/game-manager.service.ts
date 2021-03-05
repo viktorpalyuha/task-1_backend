@@ -1,28 +1,28 @@
 import { Injectable } from '@nestjs/common';
 import { DatasetService } from 'src/dataset/dataset.service';
-import { Data } from 'src/interfaces/data.interface';
+import { DataDto } from 'src/interfaces/data.dto';
 
 @Injectable()
 export class GameManagerService {
   constructor(private dataset: DatasetService) {}
 
-  getGames(): Data[] {
+  getGames(): DataDto[] {
     return this.dataset.getData();
   }
 
-  getGameByName(name: string): Data[] {
+  getGameByName(name: string): DataDto[] {
     return this.dataset.getDataByName(name);
   }
 
-  getGamesByCategory(category: string): Data[] {
+  getGamesByCategory(category: string): DataDto[] {
     return this.dataset.getDataByCategory(category);
   }
 
-  sortGamesByLowPrice(): Data[] {
+  sortGamesByLowPrice(): DataDto[] {
     return this.dataset.sortDataByLowPrice();
   }
 
-  sortGamesByHighPrice(): Data[] {
+  sortGamesByHighPrice(): DataDto[] {
     return this.dataset.sortDataByHighPrice();
   }
 }

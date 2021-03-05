@@ -2,11 +2,11 @@ import { Injectable } from '@nestjs/common';
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { Data } from 'src/interfaces/data.interface';
+import { DataDto } from 'src/interfaces/data.dto';
 
 @Injectable()
 export class DatasetService {
-  public data: Data[];
+  public data: DataDto[];
 
   constructor() {
     this.data = JSON.parse(
@@ -16,29 +16,29 @@ export class DatasetService {
     );
   }
 
-  getData(): Data[] {
+  getData(): DataDto[] {
     return this.data;
   }
 
-  getDataByName(name: string): Data[] {
-    return this.data.filter((game: Data) =>
+  getDataByName(name: string): DataDto[] {
+    return this.data.filter((game: DataDto) =>
       game.name.toLowerCase().includes(name.toLowerCase()),
     );
   }
 
-  getDataByCategory(category: string): Data[] {
-    return this.data.filter((game: Data) =>
+  getDataByCategory(category: string): DataDto[] {
+    return this.data.filter((game: DataDto) =>
       game.categories.toLowerCase().includes(category.toLowerCase()),
     );
   }
 
-  sortDataByLowPrice(): Data[] {
+  sortDataByLowPrice(): DataDto[] {
     const dataCopy = [...this.data];
-    return dataCopy.sort((a: Data, b: Data) => a.price - b.price);
+    return dataCopy.sort((a: DataDto, b: DataDto) => a.price - b.price);
   }
 
-  sortDataByHighPrice(): Data[] {
+  sortDataByHighPrice(): DataDto[] {
     const dataCopy = [...this.data];
-    return dataCopy.sort((a: Data, b: Data) => b.price - a.price);
+    return dataCopy.sort((a: DataDto, b: DataDto) => b.price - a.price);
   }
 }

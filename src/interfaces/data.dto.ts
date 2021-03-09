@@ -1,4 +1,4 @@
-export interface Data {
+export class DataDto {
   url: string;
   name: string;
   categories: string;

@@ -1,5 +1,5 @@
 import { Controller, Get, Param, Query } from '@nestjs/common';
-import { Data } from 'src/interfaces/data.interface';
+import { DataDto } from 'src/interfaces/data.dto';
 import { GameManagerService } from './game-manager.service';
 
 @Controller('games')
@@ -7,12 +7,12 @@ export class GameManagerController {
   constructor(private gameManagerService: GameManagerService) {}
 
   @Get()
-  getData(): Data[] {
+  getData(): DataDto[] {
     return this.gameManagerService.getGames();
   }
 
   @Get('/sort')
-  sortGamesByPrice(@Query('from') from): Data[] {
+  sortGamesByPrice(@Query('from') from): DataDto[] {
     if (from === 'low') {
       return this.gameManagerService.sortGamesByLowPrice();
     } else {
@@ -21,12 +21,12 @@ export class GameManagerController {
   }
 
   @Get('/search/:name')
-  getGameByName(@Param('name') name: string): Data[] {
+  getGameByName(@Param('name') name: string): DataDto[] {
     return this.gameManagerService.getGameByName(name);
   }
 
   @Get('/category/:category')
-  getGamesByCategory(@Param('category') category: string): Data[] {
+  getGamesByCategory(@Param('category') category: string): DataDto[] {
     return this.gameManagerService.getGamesByCategory(category);
   }
 }

@@ -11,7 +11,7 @@ import { AppService } from './app.service';
 @Module({
   imports: [
     RouterModule.forRoutes(routes),
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/games', {
+    MongooseModule.forRoot('mongodb://127.0.0.1:27017/shop', {
       useNewUrlParser: true,
     }),
     GameManagerModule,

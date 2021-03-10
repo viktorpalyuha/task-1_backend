@@ -50,4 +50,46 @@ export class MongoDatasetService {
   async sortDataByHighPrice(): Promise<Game[]> {
     return await this.gameModel.find().sort({ price: -1 });
   }
+
+  async getTotalAveragePrice(): Promise<Game[]> {
+    return await this.gameModel.aggregate([
+      { $group: { _id: null, avgPrice: { $avg: '$price' } } },
+      { $project: { _id: 0, avgPrice: 1 } },
+    ]);
+  }
+
+  async getGamesInPriceRange(range: string): Promise<Game[]> {
+    if (range === '1-100') {
+      return await this.gameModel.aggregate([
+        { $match: { price: { $gte: 1, $lte: 100 } } },
+        { $count: 'numberOfGames' },
+      ]);
+    } else if (range === '100-499') {
+      return await this.gameModel.aggregate([
+        { $match: { price: { $gte: 100, $lte: 499 } } },
+        { $count: 'numberOfGames' },
+      ]);
+    } else if (range === '500') {
+      return await this.gameModel.aggregate([
+        { $match: { price: { $gte: 500 } } },
+        { $count: 'numberOfGames' },
+      ]);
+    }
+  }
+
+  async getStatsByCategory(category: string): Promise<Game[]> {
+    return await this.gameModel.aggregate([
+      { $match: { categories: { $regex: category, $options: 'i' } } },
+      {
+        $group: {
+          _id: null,
+          numberOfGames: { $sum: 1 },
+          avgPrice: { $avg: '$price' },
+          higestPrice: { $max: '$price' },
+          lowestPrice: { $min: '$price' },
+        },
+      },
+      { $project: { _id: 0 } },
+    ]);
+  }
 }

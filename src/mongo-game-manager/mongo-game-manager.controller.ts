@@ -29,4 +29,17 @@ export class MongoGameManagerController {
   getGamesByCategory(@Param('category') category: string): Promise<Game[]> {
     return this.mongoGameManagerService.getGamesByCategory(category);
   }
+
+  @Get('/statistics')
+  getStatistics(@Query() query): Promise<Game[]> {
+    const { category, price } = query;
+
+    if (category) {
+      return this.mongoGameManagerService.getStatsByCategory(category);
+    } else if (price) {
+      return this.mongoGameManagerService.getGamesInPriceRange(price);
+    } else {
+      return this.mongoGameManagerService.getTotalAveragePrice();
+    }
+  }
 }

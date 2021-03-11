@@ -74,14 +74,22 @@ export class MongoDatasetService {
       {
         $group: {
           _id: null,
-          category,
           numberOfGames: { $sum: 1 },
           avgPrice: { $avg: '$price' },
-          higestPrice: { $max: '$price' },
+          highestPrice: { $max: '$price' },
           lowestPrice: { $min: '$price' },
         },
       },
-      { $project: { _id: 0 } },
+      {
+        $project: {
+          _id: 0,
+          category: category,
+          numberOfGames: 1,
+          avgPrice: { $round: ['$avgPrice', 2] },
+          highestPrice: 1,
+          lowestPrice: 1,
+        },
+      },
     ]);
   }
 }

@@ -6,8 +6,8 @@ import * as path from 'path';
 
 import { Game, GameDocument } from './../schemas/game.schema';
 import { PriceStatsDto } from './../interfaces/aggregate/priceStats.dto';
-import { CategoryStatsDto } from '../interfaces/aggregate/categoryStats.dto';
 import { GameDto } from './../interfaces/game.dto';
+import { CategoryStatsDto } from '../interfaces/aggregate/categoryStats.dto';
 
 @Injectable()
 export class MongoDatasetService {
@@ -74,6 +74,7 @@ export class MongoDatasetService {
       {
         $group: {
           _id: null,
+          category,
           numberOfGames: { $sum: 1 },
           avgPrice: { $avg: '$price' },
           higestPrice: { $max: '$price' },

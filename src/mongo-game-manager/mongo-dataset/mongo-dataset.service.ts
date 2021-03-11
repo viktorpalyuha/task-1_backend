@@ -57,7 +57,7 @@ export class MongoDatasetService {
   getTotalAveragePrice(): Aggregate<PriceStatsDto[]> {
     return this.gameModel.aggregate([
       { $group: { _id: null, avgPrice: { $avg: '$price' } } },
-      { $project: { _id: 0, avgPrice: 1 } },
+      { $project: { _id: 0, avgPrice: { $round: ['$avgPrice', 2] } } },
     ]);
   }
 

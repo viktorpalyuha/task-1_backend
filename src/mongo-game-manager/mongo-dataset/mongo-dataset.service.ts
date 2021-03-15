@@ -28,4 +28,26 @@ export class MongoDatasetService {
       ),
     );
   }
+
+  async getData(): Promise<Game[]> {
+    return await this.gameModel.find();
+  }
+
+  async getDataByName(name: string): Promise<Game[]> {
+    return await this.gameModel.find({ name: { $regex: name, $options: 'i' } });
+  }
+
+  async getDataByCategory(category: string): Promise<Game[]> {
+    return await this.gameModel.find({
+      categories: { $regex: category, $options: 'i' },
+    });
+  }
+
+  async sortDataByLowPrice(): Promise<Game[]> {
+    return await this.gameModel.find().sort({ price: 1 });
+  }
+
+  async sortDataByHighPrice(): Promise<Game[]> {
+    return await this.gameModel.find().sort({ price: -1 });
+  }
 }

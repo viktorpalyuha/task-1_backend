@@ -25,4 +25,16 @@ export class MongoGameManagerService {
   sortGamesByHighPrice(): Promise<Game[]> {
     return this.mongoDataset.sortDataByHighPrice();
   }
+
+  getTotalAveragePrice(): Promise<Game[]> {
+    return this.mongoDataset.getTotalAveragePrice();
+  }
+
+  getGamesInPriceRange(range: string): Promise<Game[]> {
+    return this.mongoDataset.getGamesInPriceRange(range);
+  }
+
+  getStatsByCategory(category: string): Promise<Game[]> {
+    return this.mongoDataset.getStatsByCategory(category);
+  }
 }

@@ -9,6 +9,7 @@ export class Category {
     type: 'varchar',
     length: 50,
     nullable: false,
+    unique: true,
   })
   name: string;
 }

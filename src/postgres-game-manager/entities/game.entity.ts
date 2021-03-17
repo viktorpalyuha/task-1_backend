@@ -34,7 +34,7 @@ export class Game {
   developer: string;
 
   @Column({
-    type: 'number',
+    type: 'numeric',
     nullable: false,
   })
   price: number;

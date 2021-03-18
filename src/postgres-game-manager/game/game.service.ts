@@ -34,12 +34,7 @@ export class GameService {
         .createQueryBuilder()
         .insert()
         .into(Game)
-        .values({
-          name: game.name,
-          img_url: game.img_url,
-          developer: game.developer,
-          price: game.price,
-        })
+        .values(game)
         .execute()
         .then(() => {
           //Searching for appropriate entities in CategoryRepository and setting the relation
@@ -71,63 +66,78 @@ export class GameService {
   }
 
   async getData(): Promise<Game[]> {
-    return this.gamesRepository.find({ relations: ['categories'] });
+    return await this.gamesRepository
+      .createQueryBuilder('game')
+      .leftJoinAndSelect('game.categories', 'category')
+      .select([
+        'game.name',
+        'game.img_url',
+        'game.developer',
+        'game.price',
+        'category.name',
+      ])
+      .getMany();
   }
 
-  // async getDataByName(name: string): Promise<Game[]> {
-  //   return this.gamesRepository.find({ name: { $regex: name, $options: 'i' } });
-  // }
+  async getDataByName(name: string): Promise<Game[]> {
+    return await this.gamesRepository
+      .createQueryBuilder('game')
+      .where('game.name iLIKE :name', { name: `%${name}%` })
+      .leftJoinAndSelect('game.categories', 'category')
+      .select([
+        'game.name',
+        'game.img_url',
+        'game.developer',
+        'game.price',
+        'category.name',
+      ])
+      .getMany();
+  }
 
-  // async getDataByCategory(category: string): Promise<Game[]> {
-  //   return this.gamesRepository.find({
-  //     categories: { $regex: category, $options: 'i' },
-  //   });
-  // }
+  async getDataByCategory(category: string): Promise<Game[]> {
+    return await this.gamesRepository
+      .createQueryBuilder('game')
+      .where('category.name IN (:name)', {
+        name: category,
+      })
+      .leftJoinAndSelect('game.categories', 'category')
+      .select([
+        'game.name',
+        'game.img_url',
+        'game.developer',
+        'game.price',
+        'category.name',
+      ])
+      .getMany();
+  }
 
-  // async sortDataByLowPrice(): Promise<Game[]> {
-  //   return this.gamesRepository.find().sort({ price: 1 });
-  // }
+  async sortDataByLowPrice(): Promise<Game[]> {
+    return await this.gamesRepository
+      .createQueryBuilder('game')
+      .leftJoinAndSelect('game.categories', 'category')
+      .select([
+        'game.name',
+        'game.img_url',
+        'game.developer',
+        'game.price',
+        'category.name',
+      ])
+      .orderBy({ price: 'ASC' })
+      .getMany();
+  }
 
-  // async sortDataByHighPrice(): Promise<Game[]> {
-  //   return this.gamesRepository.find().sort({ price: -1 });
-  // }
-
-  // getTotalAveragePrice(): Aggregate<PriceStatsDto[]> {
-  //   return this.gameModel.aggregate([
-  //     { $group: { _id: null, avgPrice: { $avg: '$price' } } },
-  //     { $project: { _id: 0, avgPrice: { $round: ['$avgPrice', 2] } } },
-  //   ]);
-  // }
-
-  // getGamesInPriceRange(range: number): Aggregate<PriceStatsDto[]> {
-  //   return this.gameModel.aggregate([
-  //     { $match: { price: { $gte: +range, $lte: +range + 100 } } },
-  //     { $count: 'numberOfGames' },
-  //   ]);
-  // }
-
-  // getStatsByCategory(category: string): Aggregate<CategoryStatsDto[]> {
-  //   return this.gameModel.aggregate([
-  //     { $match: { categories: { $regex: category, $options: 'i' } } },
-  //     {
-  //       $group: {
-  //         _id: null,
-  //         numberOfGames: { $sum: 1 },
-  //         avgPrice: { $avg: '$price' },
-  //         highestPrice: { $max: '$price' },
-  //         lowestPrice: { $min: '$price' },
-  //       },
-  //     },
-  //     {
-  //       $project: {
-  //         _id: 0,
-  //         category: category,
-  //         numberOfGames: 1,
-  //         avgPrice: { $round: ['$avgPrice', 2] },
-  //         highestPrice: 1,
-  //         lowestPrice: 1,
-  //       },
-  //     },
-  //   ]);
-  // }
+  async sortDataByHighPrice(): Promise<Game[]> {
+    return await this.gamesRepository
+      .createQueryBuilder('game')
+      .leftJoinAndSelect('game.categories', 'category')
+      .select([
+        'game.name',
+        'game.img_url',
+        'game.developer',
+        'game.price',
+        'category.name',
+      ])
+      .orderBy({ price: 'DESC' })
+      .getMany();
+  }
 }

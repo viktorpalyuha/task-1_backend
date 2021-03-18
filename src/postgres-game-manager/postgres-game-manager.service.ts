@@ -10,31 +10,19 @@ export class PostgresGameManagerService {
     return this.gameService.getData();
   }
 
-  // getGameByName(name: string): Promise<GameDto[]> {
-  //   return this.mongoDataset.getDataByName(name);
-  // }
+  getGameByName(name: string): Promise<Game[]> {
+    return this.gameService.getDataByName(name);
+  }
 
-  // getGamesByCategory(category: string): Promise<GameDto[]> {
-  //   return this.mongoDataset.getDataByCategory(category);
-  // }
+  getGamesByCategory(category: string): Promise<Game[]> {
+    return this.gameService.getDataByCategory(category);
+  }
 
-  // sortGamesByLowPrice(): Promise<GameDto[]> {
-  //   return this.mongoDataset.sortDataByLowPrice();
-  // }
+  sortGamesByLowPrice(): Promise<Game[]> {
+    return this.gameService.sortDataByLowPrice();
+  }
 
-  // sortGamesByHighPrice(): Promise<GameDto[]> {
-  //   return this.mongoDataset.sortDataByHighPrice();
-  // }
-
-  // getTotalAveragePrice(): Aggregate<PriceStatsDto[]> {
-  //   return this.mongoDataset.getTotalAveragePrice();
-  // }
-
-  // getGamesInPriceRange(range: number): Aggregate<PriceStatsDto[]> {
-  //   return this.mongoDataset.getGamesInPriceRange(range);
-  // }
-
-  // getStatsByCategory(category: string): Aggregate<CategoryStatsDto[]> {
-  //   return this.mongoDataset.getStatsByCategory(category);
-  // }
+  sortGamesByHighPrice(): Promise<Game[]> {
+    return this.gameService.sortDataByHighPrice();
+  }
 }

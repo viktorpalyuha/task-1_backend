@@ -1,11 +1,9 @@
-import { Category } from '../entities/category.entity';
-import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoryService } from './category.service';
+import { PostgresGameManagerModule } from './../postgres-game-manager.module';
+import { forwardRef, Module } from '@nestjs/common';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Category])],
-  providers: [CategoryService],
+  imports: [forwardRef(() => PostgresGameManagerModule)],
+  providers: [],
   controllers: [],
 })
 export class CategoryModule {}

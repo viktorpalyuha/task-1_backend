@@ -1,3 +1,8 @@
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Game } from './entities/game.entity';
+import { Category } from './entities/category.entity';
+import { GameService } from './game/game.service';
+import { CategoryService } from './category/category.service';
 import { GameModule } from './game/game.module';
 import { CategoryModule } from './category/category.module';
 import { Module } from '@nestjs/common';
@@ -5,8 +10,13 @@ import { PostgresGameManagerController } from './postgres-game-manager.controlle
 import { PostgresGameManagerService } from './postgres-game-manager.service';
 
 @Module({
-  imports: [CategoryModule, GameModule],
+  imports: [
+    TypeOrmModule.forFeature([Category, Game]),
+    CategoryModule,
+    GameModule,
+  ],
   controllers: [PostgresGameManagerController],
-  providers: [PostgresGameManagerService],
+  providers: [PostgresGameManagerService, GameService, CategoryService],
+  exports: [TypeOrmModule],
 })
 export class PostgresGameManagerModule {}

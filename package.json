@@ -22,16 +22,21 @@
   },
   "dependencies": {
     "@nestjs/common": "^7.6.13",
+    "@nestjs/config": "^0.6.3",
     "@nestjs/core": "^7.6.13",
     "@nestjs/mongoose": "^7.2.4",
     "@nestjs/platform-express": "^7.6.13",
     "@nestjs/swagger": "^4.7.15",
+    "@nestjs/typeorm": "^7.1.5",
     "mongoose": "^5.11.19",
     "nest-router": "^1.0.9",
+    "pg": "^8.5.1",
+    "pg-hstore": "^2.3.3",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.6",
-    "swagger-ui-express": "^4.1.6"
+    "swagger-ui-express": "^4.1.6",
+    "typeorm": "^0.2.31"
   },
   "devDependencies": {
     "@nestjs/cli": "^7.5.6",

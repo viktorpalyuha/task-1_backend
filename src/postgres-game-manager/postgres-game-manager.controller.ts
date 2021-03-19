@@ -1,6 +1,6 @@
+import { DataDto } from './../interfaces/data.dto';
 import { CategoryStatsDto } from './../mongo-game-manager/interfaces/aggregate/categoryStats.dto';
 import { PriceStatsDto } from './../mongo-game-manager/interfaces/aggregate/priceStats.dto';
-import { Game } from './entities/game.entity';
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PostgresGameManagerService } from './postgres-game-manager.service';
@@ -11,12 +11,12 @@ export class PostgresGameManagerController {
   constructor(private postgresGameManagerService: PostgresGameManagerService) {}
 
   @Get()
-  getData(): Promise<Game[]> {
+  getData(): Promise<DataDto[]> {
     return this.postgresGameManagerService.getGames();
   }
 
   @Get('/sort')
-  sortGamesByPrice(@Query('from') from: string): Promise<Game[]> {
+  sortGamesByPrice(@Query('from') from: string): Promise<DataDto[]> {
     if (from === 'low') {
       return this.postgresGameManagerService.sortGamesByLowPrice();
     } else {
@@ -25,12 +25,12 @@ export class PostgresGameManagerController {
   }
 
   @Get('/search/:name')
-  getGameByName(@Param('name') name: string): Promise<Game[]> {
+  getGameByName(@Param('name') name: string): Promise<DataDto[]> {
     return this.postgresGameManagerService.getGameByName(name);
   }
 
   @Get('/category/:category')
-  getGamesByCategory(@Param('category') category: string): Promise<Game[]> {
+  getGamesByCategory(@Param('category') category: string): Promise<DataDto[]> {
     return this.postgresGameManagerService.getGamesByCategory(category);
   }
 

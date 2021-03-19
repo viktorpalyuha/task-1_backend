@@ -25,4 +25,16 @@ export class PostgresGameManagerService {
   sortGamesByHighPrice(): Promise<Game[]> {
     return this.gameService.sortDataByHighPrice();
   }
+
+  getTotalAveragePrice() {
+    return this.gameService.getTotalAveragePrice();
+  }
+
+  getGamesInPriceRange(range: number) {
+    return this.gameService.getGamesInPriceRange(range);
+  }
+
+  getStatsByCategory(category: string) {
+    return this.gameService.getStatsByCategory(category);
+  }
 }

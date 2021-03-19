@@ -1,3 +1,5 @@
+import { CategoryStatsDto } from './../../mongo-game-manager/interfaces/aggregate/categoryStats.dto';
+import { PriceStatsDto } from './../../mongo-game-manager/interfaces/aggregate/priceStats.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
@@ -56,13 +58,6 @@ export class GameService {
           });
         });
     });
-
-    // this.gamesRepository
-    //   .createQueryBuilder()
-    //   .insert()
-    //   .into(Game)
-    //   .values(allGames)
-    //   .execute();
   }
 
   async getData(): Promise<Game[]> {
@@ -139,5 +134,39 @@ export class GameService {
       ])
       .orderBy({ price: 'DESC' })
       .getMany();
+  }
+
+  getTotalAveragePrice(): Promise<PriceStatsDto[]> {
+    return this.gamesRepository
+      .createQueryBuilder('game')
+      .select('ROUND(AVG(game.price), 2)', 'avgPrice')
+      .getRawMany();
+  }
+
+  getGamesInPriceRange(range: number): Promise<PriceStatsDto[]> {
+    return this.gamesRepository
+      .createQueryBuilder('game')
+      .where('game.price BETWEEN :startRange AND :finalRange', {
+        startRange: +range,
+        finalRange: +range + 100,
+      })
+      .select('COUNT((game))', 'numberOfGames')
+      .getRawMany();
+  }
+
+  getStatsByCategory(category: string): Promise<CategoryStatsDto[]> {
+    return this.gamesRepository
+      .createQueryBuilder('game')
+      .leftJoinAndSelect('game.categories', 'category')
+      .where('category.name IN (:name)', {
+        name: category,
+      })
+      .select([
+        'COUNT((game)) AS numberOfGames',
+        'ROUND(AVG(game.price), 2) AS avgPrice',
+        'MAX(game.price) AS highestPrice',
+        'MIN(game.price) AS lowestPrice',
+      ])
+      .getRawMany();
   }
 }

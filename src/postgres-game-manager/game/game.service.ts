@@ -61,12 +61,5 @@ export class GameService {
           });
         });
     });
-
-    // this.gamesRepository
-    //   .createQueryBuilder()
-    //   .insert()
-    //   .into(Game)
-    //   .values(allGames)
-    //   .execute();
   }
 }

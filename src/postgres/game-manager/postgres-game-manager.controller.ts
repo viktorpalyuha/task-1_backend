@@ -5,7 +5,7 @@ import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PostgresGameManagerService } from './postgres-game-manager.service';
 
-@ApiTags('v3', 'v4')
+@ApiTags('v3')
 @Controller('games')
 export class PostgresGameManagerController {
   constructor(private postgresGameManagerService: PostgresGameManagerService) {}

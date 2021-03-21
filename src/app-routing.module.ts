@@ -1,3 +1,4 @@
+import { AuthModule } from './postgres/auth/auth.module';
 import { Routes } from 'nest-router';
 import { GameManagerModule } from './game-manager/game-manager.module';
 import { MongoGameManagerModule } from './mongo-game-manager/mongo-game-manager.module';
@@ -14,6 +15,6 @@ export const routes: Routes = [
   },
   {
     path: '/v3',
-    module: PostgresGameManagerModule,
+    children: [PostgresGameManagerModule, AuthModule],
   },
 ];

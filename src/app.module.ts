@@ -1,3 +1,4 @@
+import { AuthModule } from './postgres/auth/auth.module';
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { RouterModule } from 'nest-router';
@@ -31,6 +32,7 @@ import { PostgresGameManagerModule } from './postgres/game-manager/postgres-game
     GameManagerModule,
     MongoGameManagerModule,
     PostgresGameManagerModule,
+    AuthModule,
   ],
   providers: [AppService],
 })

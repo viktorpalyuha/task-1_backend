@@ -9,7 +9,7 @@ import { GameManagerModule } from './game-manager/game-manager.module';
 import { MongoGameManagerModule } from './mongo-game-manager/mongo-game-manager.module';
 
 import { AppService } from './app.service';
-import { PostgresGameManagerModule } from './postgres-game-manager/postgres-game-manager.module';
+import { PostgresGameManagerModule } from './postgres/game-manager/postgres-game-manager.module';
 @Global()
 @Module({
   imports: [

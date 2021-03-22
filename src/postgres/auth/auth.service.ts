@@ -12,10 +12,10 @@ export class AuthService {
 
   async validateCustomer(
     email: string,
-    pass: string,
+    password: string,
   ): Promise<Partial<Customer>> {
     const customer = await this.customersService.findByEmail(email);
-    if (customer && customer.password === pass) {
+    if (customer && customer.comparePassword(password)) {
       const { password, ...result } = customer;
       return result;
     }

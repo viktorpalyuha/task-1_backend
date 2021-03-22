@@ -24,4 +24,11 @@ export class User {
     nullable: true,
   })
   password: string;
+
+  @Column({
+    type: 'varchar',
+    length: 50,
+    default: 'local',
+  })
+  evnironment: string;
 }

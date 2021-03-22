@@ -27,7 +27,9 @@ export class GameService {
   insertGames(): void {
     const allGames = JSON.parse(
       fs
-        .readFileSync(path.join(__dirname, '..', '..', '..', 'steamData.json'))
+        .readFileSync(
+          path.join(__dirname, '..', '..', '..', '..', 'steamData.json'),
+        )
         .toString(),
     );
 

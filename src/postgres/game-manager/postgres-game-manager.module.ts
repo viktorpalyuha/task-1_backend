@@ -1,3 +1,4 @@
+import { JwtStrategy } from './../auth/jwt.strategy';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Game } from './entities/game.entity';
 import { Category } from './entities/category.entity';
@@ -16,7 +17,12 @@ import { PostgresGameManagerService } from './postgres-game-manager.service';
     GameModule,
   ],
   controllers: [PostgresGameManagerController],
-  providers: [PostgresGameManagerService, GameService, CategoryService],
+  providers: [
+    PostgresGameManagerService,
+    GameService,
+    CategoryService,
+    JwtStrategy,
+  ],
   exports: [TypeOrmModule],
 })
 export class PostgresGameManagerModule {}

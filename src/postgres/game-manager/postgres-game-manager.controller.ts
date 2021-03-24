@@ -1,6 +1,6 @@
-import { DataDto } from './../interfaces/data.dto';
-import { CategoryStatsDto } from './../mongo-game-manager/interfaces/aggregate/categoryStats.dto';
-import { PriceStatsDto } from './../mongo-game-manager/interfaces/aggregate/priceStats.dto';
+import { DataDto } from '../../interfaces/data.dto';
+import { CategoryStatsDto } from '../../mongo-game-manager/interfaces/aggregate/categoryStats.dto';
+import { PriceStatsDto } from '../../mongo-game-manager/interfaces/aggregate/priceStats.dto';
 import { Controller, Get, Param, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { PostgresGameManagerService } from './postgres-game-manager.service';

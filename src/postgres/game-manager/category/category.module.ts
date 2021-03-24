@@ -1,4 +1,4 @@
-import { PostgresGameManagerModule } from './../postgres-game-manager.module';
+import { PostgresGameManagerModule } from '../postgres-game-manager.module';
 import { forwardRef, Module } from '@nestjs/common';
 
 @Module({

@@ -1,6 +1,6 @@
-import { CategoryStatsDto } from './../mongo-game-manager/interfaces/aggregate/categoryStats.dto';
-import { PriceStatsDto } from './../mongo-game-manager/interfaces/aggregate/priceStats.dto';
-import { DataDto } from './../interfaces/data.dto';
+import { CategoryStatsDto } from '../../mongo-game-manager/interfaces/aggregate/categoryStats.dto';
+import { PriceStatsDto } from '../../mongo-game-manager/interfaces/aggregate/priceStats.dto';
+import { DataDto } from '../../interfaces/data.dto';
 import { Injectable } from '@nestjs/common';
 import { GameService } from './game/game.service';
 

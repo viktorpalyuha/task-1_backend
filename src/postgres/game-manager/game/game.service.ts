@@ -1,13 +1,13 @@
-import { DataDto } from './../../interfaces/data.dto';
-import { CategoryStatsDto } from './../../mongo-game-manager/interfaces/aggregate/categoryStats.dto';
-import { PriceStatsDto } from './../../mongo-game-manager/interfaces/aggregate/priceStats.dto';
+import { DataDto } from '../../../interfaces/data.dto';
+import { CategoryStatsDto } from '../../../mongo-game-manager/interfaces/aggregate/categoryStats.dto';
+import { PriceStatsDto } from '../../../mongo-game-manager/interfaces/aggregate/priceStats.dto';
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as fs from 'fs';
 import * as path from 'path';
 
-import { Game } from './../entities/game.entity';
+import { Game } from '../entities/game.entity';
 import { Category } from '../entities/category.entity';
 @Injectable()
 export class GameService {

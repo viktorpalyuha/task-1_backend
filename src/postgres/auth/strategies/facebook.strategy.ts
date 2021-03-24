@@ -1,23 +1,23 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Profile, Strategy } from 'passport-facebook';
+import { Strategy } from 'passport-facebook-token-nest';
 
 @Injectable()
-export class FacebookStrategy extends PassportStrategy(Strategy, 'facebook') {
+export class FacebookStrategy extends PassportStrategy(
+  Strategy,
+  'facebook-token',
+) {
   constructor() {
     super({
       clientID: process.env.APP_ID,
       clientSecret: process.env.APP_SECRET,
-      callbackURL: 'http://localhost:3000/v3/auth/facebook/redirect',
-      scope: 'email',
-      profileFields: ['emails', 'name'],
     });
   }
 
   async validate(
     accessToken: string,
     refreshToken: string,
-    profile: Profile,
+    profile: any,
     done: (err: any, customer: any, info?: any) => void,
   ): Promise<any> {
     const { name, emails } = profile;

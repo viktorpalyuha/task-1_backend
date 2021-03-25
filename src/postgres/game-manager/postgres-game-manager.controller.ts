@@ -1,11 +1,13 @@
 import { DataDto } from '../../interfaces/data.dto';
 import { CategoryStatsDto } from '../../mongo-game-manager/interfaces/aggregate/categoryStats.dto';
 import { PriceStatsDto } from '../../mongo-game-manager/interfaces/aggregate/priceStats.dto';
-import { Controller, Get, Param, Query } from '@nestjs/common';
+import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiTags } from '@nestjs/swagger';
 import { PostgresGameManagerService } from './postgres-game-manager.service';
 
 @ApiTags('v3')
+@UseGuards(AuthGuard('jwt'))
 @Controller('games')
 export class PostgresGameManagerController {
   constructor(private postgresGameManagerService: PostgresGameManagerService) {}

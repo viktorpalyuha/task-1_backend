@@ -13,4 +13,10 @@ export class CustomerService {
   async findByEmail(email: string): Promise<Customer> {
     return await this.customersRepository.findOne({ email });
   }
+
+  async create(customer: Customer) {
+    const newCustomer = await this.customersRepository.create(customer);
+    await this.customersRepository.save(newCustomer);
+    return newCustomer;
+  }
 }

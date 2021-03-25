@@ -28,4 +28,8 @@ export class AuthService {
       JWT_token: this.jwtService.sign(payload),
     };
   }
+
+  async register(registrationData: Customer) {
+    return await this.customersService.create(registrationData);
+  }
 }

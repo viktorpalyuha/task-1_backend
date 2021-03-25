@@ -25,7 +25,7 @@ export class CategoryService {
         JSON.parse(
           fs
             .readFileSync(
-              path.join(__dirname, '..', '..', '..', 'steamData.json'),
+              path.join(__dirname, '..', '..', '..', '..', 'steamData.json'),
             )
             .toString(),
         )

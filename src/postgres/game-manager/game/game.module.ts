@@ -3,7 +3,5 @@ import { forwardRef, Module } from '@nestjs/common';
 
 @Module({
   imports: [forwardRef(() => PostgresGameManagerModule)],
-  providers: [],
-  controllers: [],
 })
 export class GameModule {}

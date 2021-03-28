@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as fs from 'fs';
@@ -7,11 +7,13 @@ import * as path from 'path';
 import { Category } from '../entities/category.entity';
 
 @Injectable()
-export class CategoryService {
+export class CategoryService implements OnModuleInit {
   constructor(
     @InjectRepository(Category)
     private categoriesRepository: Repository<Category>,
-  ) {
+  ) {}
+
+  onModuleInit(): void {
     this.categoriesRepository.find().then((categories) => {
       if (!categories.length) {
         this.insertCategories();

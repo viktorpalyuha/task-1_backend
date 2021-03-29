@@ -1,7 +1,7 @@
 import { DataDto } from '../../../interfaces/data.dto';
 import { CategoryStatsDto } from '../../../mongo-game-manager/interfaces/aggregate/categoryStats.dto';
 import { PriceStatsDto } from '../../../mongo-game-manager/interfaces/aggregate/priceStats.dto';
-import { Injectable } from '@nestjs/common';
+import { Injectable, OnModuleInit } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as fs from 'fs';
@@ -10,13 +10,15 @@ import * as path from 'path';
 import { Game } from '../entities/game.entity';
 import { Category } from '../entities/category.entity';
 @Injectable()
-export class GameService {
+export class GameService implements OnModuleInit {
   constructor(
     @InjectRepository(Game)
     private gamesRepository: Repository<Game>,
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
-  ) {
+  ) {}
+
+  onModuleInit(): void {
     this.gamesRepository.find().then((games: Game[]) => {
       if (!games.length) {
         this.insertGames();

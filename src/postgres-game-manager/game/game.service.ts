@@ -1,3 +1,4 @@
+import { DataDto } from './../../interfaces/data.dto';
 import { CategoryStatsDto } from './../../mongo-game-manager/interfaces/aggregate/categoryStats.dto';
 import { PriceStatsDto } from './../../mongo-game-manager/interfaces/aggregate/priceStats.dto';
 import { Injectable } from '@nestjs/common';
@@ -60,8 +61,8 @@ export class GameService {
     });
   }
 
-  async getData(): Promise<Game[]> {
-    return await this.gamesRepository
+  async getData(): Promise<DataDto[]> {
+    const allGames = await this.gamesRepository
       .createQueryBuilder('game')
       .leftJoinAndSelect('game.categories', 'category')
       .select([
@@ -72,10 +73,21 @@ export class GameService {
         'category.name',
       ])
       .getMany();
+
+    return allGames.map(
+      (game: Game): DataDto => {
+        return {
+          ...game,
+          categories: game.categories
+            .map((category) => category.name)
+            .join(' '),
+        };
+      },
+    );
   }
 
-  async getDataByName(name: string): Promise<Game[]> {
-    return await this.gamesRepository
+  async getDataByName(name: string): Promise<DataDto[]> {
+    const receivedGamesByName = await this.gamesRepository
       .createQueryBuilder('game')
       .where('game.name iLIKE :name', { name: `%${name}%` })
       .leftJoinAndSelect('game.categories', 'category')
@@ -87,15 +99,26 @@ export class GameService {
         'category.name',
       ])
       .getMany();
+
+    return receivedGamesByName.map(
+      (game: Game): DataDto => {
+        return {
+          ...game,
+          categories: game.categories
+            .map((category) => category.name)
+            .join(' '),
+        };
+      },
+    );
   }
 
-  async getDataByCategory(category: string): Promise<Game[]> {
-    return await this.gamesRepository
+  async getDataByCategory(category: string): Promise<DataDto[]> {
+    const gamesByCategory = await this.gamesRepository
       .createQueryBuilder('game')
       .where('category.name IN (:name)', {
         name: category,
       })
-      .leftJoinAndSelect('game.categories', 'category')
+      .leftJoin('game.categories', 'category')
       .select([
         'game.name',
         'game.img_url',
@@ -104,10 +127,21 @@ export class GameService {
         'category.name',
       ])
       .getMany();
+
+    return gamesByCategory.map(
+      (game: Game): DataDto => {
+        return {
+          ...game,
+          categories: game.categories
+            .map((category) => category.name)
+            .join(' '),
+        };
+      },
+    );
   }
 
-  async sortDataByLowPrice(): Promise<Game[]> {
-    return await this.gamesRepository
+  async sortDataByLowPrice(): Promise<DataDto[]> {
+    const sortedGamesByLow = await this.gamesRepository
       .createQueryBuilder('game')
       .leftJoinAndSelect('game.categories', 'category')
       .select([
@@ -119,10 +153,21 @@ export class GameService {
       ])
       .orderBy({ price: 'ASC' })
       .getMany();
+
+    return sortedGamesByLow.map(
+      (game: Game): DataDto => {
+        return {
+          ...game,
+          categories: game.categories
+            .map((category) => category.name)
+            .join(' '),
+        };
+      },
+    );
   }
 
-  async sortDataByHighPrice(): Promise<Game[]> {
-    return await this.gamesRepository
+  async sortDataByHighPrice(): Promise<DataDto[]> {
+    const sortedGamesByHigh = await this.gamesRepository
       .createQueryBuilder('game')
       .leftJoinAndSelect('game.categories', 'category')
       .select([
@@ -134,6 +179,17 @@ export class GameService {
       ])
       .orderBy({ price: 'DESC' })
       .getMany();
+
+    return sortedGamesByHigh.map(
+      (game: Game): DataDto => {
+        return {
+          ...game,
+          categories: game.categories
+            .map((category) => category.name)
+            .join(' '),
+        };
+      },
+    );
   }
 
   getTotalAveragePrice(): Promise<PriceStatsDto[]> {
@@ -154,19 +210,22 @@ export class GameService {
       .getRawMany();
   }
 
-  getStatsByCategory(category: string): Promise<CategoryStatsDto[]> {
-    return this.gamesRepository
+  async getStatsByCategory(category: string): Promise<CategoryStatsDto[]> {
+    const receivedStats = await this.gamesRepository
       .createQueryBuilder('game')
       .leftJoinAndSelect('game.categories', 'category')
       .where('category.name IN (:name)', {
         name: category,
       })
       .select([
-        'COUNT((game)) AS numberOfGames',
-        'ROUND(AVG(game.price), 2) AS avgPrice',
-        'MAX(game.price) AS highestPrice',
-        'MIN(game.price) AS lowestPrice',
+        'COUNT((game)) AS "numberOfGames"',
+        'ROUND(AVG(game.price), 2) AS "avgPrice"',
+        'MAX(game.price) AS "highestPrice"',
+        'MIN(game.price) AS "lowestPrice"',
       ])
       .getRawMany();
+    receivedStats.forEach((stats) => (stats.category = category));
+
+    return receivedStats;
   }
 }

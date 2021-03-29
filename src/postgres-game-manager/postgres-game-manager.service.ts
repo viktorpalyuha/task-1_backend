@@ -1,40 +1,42 @@
+import { CategoryStatsDto } from './../mongo-game-manager/interfaces/aggregate/categoryStats.dto';
+import { PriceStatsDto } from './../mongo-game-manager/interfaces/aggregate/priceStats.dto';
+import { DataDto } from './../interfaces/data.dto';
 import { Injectable } from '@nestjs/common';
 import { GameService } from './game/game.service';
 
-import { Game } from './entities/game.entity';
 @Injectable()
 export class PostgresGameManagerService {
   constructor(private gameService: GameService) {}
 
-  getGames(): Promise<Game[]> {
+  getGames(): Promise<DataDto[]> {
     return this.gameService.getData();
   }
 
-  getGameByName(name: string): Promise<Game[]> {
+  getGameByName(name: string): Promise<DataDto[]> {
     return this.gameService.getDataByName(name);
   }
 
-  getGamesByCategory(category: string): Promise<Game[]> {
+  getGamesByCategory(category: string): Promise<DataDto[]> {
     return this.gameService.getDataByCategory(category);
   }
 
-  sortGamesByLowPrice(): Promise<Game[]> {
+  sortGamesByLowPrice(): Promise<DataDto[]> {
     return this.gameService.sortDataByLowPrice();
   }
 
-  sortGamesByHighPrice(): Promise<Game[]> {
+  sortGamesByHighPrice(): Promise<DataDto[]> {
     return this.gameService.sortDataByHighPrice();
   }
 
-  getTotalAveragePrice() {
+  getTotalAveragePrice(): Promise<PriceStatsDto[]> {
     return this.gameService.getTotalAveragePrice();
   }
 
-  getGamesInPriceRange(range: number) {
+  getGamesInPriceRange(range: number): Promise<PriceStatsDto[]> {
     return this.gameService.getGamesInPriceRange(range);
   }
 
-  getStatsByCategory(category: string) {
+  getStatsByCategory(category: string): Promise<CategoryStatsDto[]> {
     return this.gameService.getStatsByCategory(category);
   }
 }

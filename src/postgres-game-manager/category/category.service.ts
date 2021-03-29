@@ -40,6 +40,7 @@ export class CategoryService {
         .insert()
         .into(Category)
         .values({ name: category })
+        .onConflict('DO NOTHING')
         .execute();
     });
   }

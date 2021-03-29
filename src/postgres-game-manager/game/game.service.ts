@@ -21,7 +21,7 @@ export class GameService {
     });
   }
 
-  insertGames() {
+  insertGames(): void {
     const allGames = JSON.parse(
       fs
         .readFileSync(path.join(__dirname, '..', '..', '..', 'steamData.json'))
@@ -34,12 +34,7 @@ export class GameService {
         .createQueryBuilder()
         .insert()
         .into(Game)
-        .values({
-          name: game.name,
-          img_url: game.img_url,
-          developer: game.developer,
-          price: game.price,
-        })
+        .values(game)
         .execute()
         .then(() => {
           //Searching for appropriate entities in CategoryRepository and setting the relation
@@ -61,5 +56,81 @@ export class GameService {
           });
         });
     });
+  }
+
+  async getData(): Promise<Game[]> {
+    return await this.gamesRepository
+      .createQueryBuilder('game')
+      .leftJoinAndSelect('game.categories', 'category')
+      .select([
+        'game.name',
+        'game.img_url',
+        'game.developer',
+        'game.price',
+        'category.name',
+      ])
+      .getMany();
+  }
+
+  async getDataByName(name: string): Promise<Game[]> {
+    return await this.gamesRepository
+      .createQueryBuilder('game')
+      .where('game.name iLIKE :name', { name: `%${name}%` })
+      .leftJoinAndSelect('game.categories', 'category')
+      .select([
+        'game.name',
+        'game.img_url',
+        'game.developer',
+        'game.price',
+        'category.name',
+      ])
+      .getMany();
+  }
+
+  async getDataByCategory(category: string): Promise<Game[]> {
+    return await this.gamesRepository
+      .createQueryBuilder('game')
+      .where('category.name IN (:name)', {
+        name: category,
+      })
+      .leftJoinAndSelect('game.categories', 'category')
+      .select([
+        'game.name',
+        'game.img_url',
+        'game.developer',
+        'game.price',
+        'category.name',
+      ])
+      .getMany();
+  }
+
+  async sortDataByLowPrice(): Promise<Game[]> {
+    return await this.gamesRepository
+      .createQueryBuilder('game')
+      .leftJoinAndSelect('game.categories', 'category')
+      .select([
+        'game.name',
+        'game.img_url',
+        'game.developer',
+        'game.price',
+        'category.name',
+      ])
+      .orderBy({ price: 'ASC' })
+      .getMany();
+  }
+
+  async sortDataByHighPrice(): Promise<Game[]> {
+    return await this.gamesRepository
+      .createQueryBuilder('game')
+      .leftJoinAndSelect('game.categories', 'category')
+      .select([
+        'game.name',
+        'game.img_url',
+        'game.developer',
+        'game.price',
+        'category.name',
+      ])
+      .orderBy({ price: 'DESC' })
+      .getMany();
   }
 }

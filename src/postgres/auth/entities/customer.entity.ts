@@ -27,8 +27,10 @@ export class Customer {
   password: string;
 
   @BeforeInsert()
-  async hashPassword() {
-    this.password = await bcrypt.hash(this.password, 10);
+  async hashPassword(): Promise<void> {
+    if (this.password) {
+      this.password = await bcrypt.hash(this.password, 10);
+    }
   }
 
   async comparePassword(attempt: string): Promise<boolean> {
@@ -40,5 +42,5 @@ export class Customer {
     length: 50,
     default: 'local',
   })
-  evnironment: string;
+  environment: string;
 }

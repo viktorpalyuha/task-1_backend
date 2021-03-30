@@ -1,3 +1,4 @@
+import { ChatModule } from './postgres/chat/chat.module';
 import { AuthModule } from './postgres/auth/auth.module';
 import { Global, Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
@@ -33,6 +34,7 @@ import { PostgresGameManagerModule } from './postgres/game-manager/postgres-game
     MongoGameManagerModule,
     PostgresGameManagerModule,
     AuthModule,
+    ChatModule,
   ],
   providers: [AppService],
 })

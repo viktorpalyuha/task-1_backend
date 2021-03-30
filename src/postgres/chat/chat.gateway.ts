@@ -12,7 +12,7 @@ export class ChatGateway {
   server: Server;
 
   @SubscribeMessage('sendMessage')
-  listenForMessages(@MessageBody() message: string) {
+  messagesListener(@MessageBody() message: string) {
     this.server.sockets.emit('receivedMessage', message);
   }
 }

@@ -30,4 +30,12 @@ export class ChatGateway {
       newMessage,
     });
   }
+
+  @SubscribeMessage('requestAllMessages')
+  @UseGuards(WsJwtGuard)
+  async getAllMessages(@ConnectedSocket() socket: Socket) {
+    const allMessages = await this.chatService.getAllMessages();
+
+    socket.emit('send_all_messages', allMessages);
+  }
 }

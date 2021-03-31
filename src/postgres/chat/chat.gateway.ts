@@ -27,7 +27,7 @@ export class ChatGateway {
     const { customer } = req;
     const newMessage = await this.chatService.saveMessage(message, customer);
     this.server.sockets.emit('receivedMessage', {
-      newMessage,
+      ...newMessage,
     });
   }
 

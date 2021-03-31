@@ -1,3 +1,4 @@
+import { WsJwtGuard } from './../auth/strategies/socket.strategy';
 import { ChatService } from './chat.service';
 import {
   MessageBody,
@@ -8,20 +9,9 @@ import {
   ConnectedSocket,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
+import { Req, UseGuards } from '@nestjs/common';
 
-@WebSocketGateway({
-  origins: ['http://localhost:4200'],
-
-  handlePreflightRequest: (_, res) => {
-    res.writeHead(200, {
-      'Access-Control-Allow-Origin': 'http://localhost:4200',
-      'Access-Control-Allow-Methods': 'GET,POST',
-      'Access-Control-Allow-Headers': 'authorization',
-      'Access-Control-Allow-Credentials': true,
-    });
-    res.end();
-  },
-})
+@WebSocketGateway({ transports: ['websocket'] })
 export class ChatGateway implements OnGatewayConnection {
   @WebSocketServer()
   server: Server;
@@ -29,19 +19,22 @@ export class ChatGateway implements OnGatewayConnection {
   constructor(private chatService: ChatService) {}
 
   async handleConnection(socket: Socket) {
-    await this.chatService.getUserFromSocket(socket);
+    const user = await this.chatService.getCustomerFromSocket(socket);
+    !user && socket.disconnect();
   }
 
   @SubscribeMessage('sendMessage')
+  @UseGuards(WsJwtGuard)
   async messagesListener(
     @MessageBody() message: string,
+    @Req() req,
     @ConnectedSocket() socket: Socket,
   ) {
-    const { full_name } = await this.chatService.getUserFromSocket(socket);
+    const { customer } = req;
 
     this.server.sockets.emit('receivedMessage', {
       message,
-      full_name,
+      customer,
     });
   }
 }

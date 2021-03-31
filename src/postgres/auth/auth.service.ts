@@ -11,7 +11,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  public async getUserFromAuthenticationToken(token: string) {
+  public async getCustomerFromAuthenticationToken(token: string) {
     const payload = this.jwtService.verify(token, {
       secret: jwtConstants.secret,
     });

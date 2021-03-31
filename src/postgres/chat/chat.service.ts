@@ -7,9 +7,9 @@ import { AuthService } from './../auth/auth.service';
 export class ChatService {
   constructor(private authService: AuthService) {}
 
-  async getUserFromSocket(socket: Socket) {
-    const authHeader = socket.handshake.headers.authorization;
-    const user = await this.authService.getUserFromAuthenticationToken(
+  async getCustomerFromSocket(socket: Socket) {
+    const authHeader = socket.handshake.query.authorization;
+    const user = await this.authService.getCustomerFromAuthenticationToken(
       authHeader,
     );
     if (!user) {

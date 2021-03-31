@@ -36,6 +36,6 @@ export class ChatGateway {
   async getAllMessages(@ConnectedSocket() socket: Socket) {
     const allMessages = await this.chatService.getAllMessages();
 
-    socket.emit('send_all_messages', allMessages);
+    socket.emit('sendAllMessages', allMessages);
   }
 }

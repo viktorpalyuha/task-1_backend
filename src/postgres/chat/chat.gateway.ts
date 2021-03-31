@@ -38,4 +38,12 @@ export class ChatGateway {
 
     socket.emit('sendAllMessages', allMessages);
   }
+
+  @SubscribeMessage('requestUserFullName')
+  @UseGuards(WsJwtGuard)
+  async getConnectedUserName(@Req() req, @ConnectedSocket() socket: Socket) {
+    const { full_name } = req.customer;
+
+    socket.emit('sendUserFullName', full_name);
+  }
 }

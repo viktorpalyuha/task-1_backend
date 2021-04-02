@@ -27,7 +27,15 @@ export class ChatGateway {
     const { customer } = req;
     const newMessage = await this.chatService.saveMessage(message, customer);
     this.server.sockets.emit('receivedMessage', {
-      newMessage,
+      ...newMessage,
     });
+  }
+
+  @SubscribeMessage('requestAllMessages')
+  @UseGuards(WsJwtGuard)
+  async getAllMessages(@ConnectedSocket() socket: Socket) {
+    const allMessages = await this.chatService.getAllMessages();
+
+    socket.emit('sendAllMessages', allMessages);
   }
 }

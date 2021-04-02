@@ -3,12 +3,22 @@ import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 
 import { Customer } from './entities/customer.entity';
+import { jwtConstants } from './strategies/jwtConstants';
 @Injectable()
 export class AuthService {
   constructor(
     private customersService: CustomerService,
     private jwtService: JwtService,
   ) {}
+
+  public async getCustomerFromAuthenticationToken(token: string) {
+    const payload = this.jwtService.verify(token, {
+      secret: jwtConstants.secret,
+    });
+    if (payload.email) {
+      return this.customersService.findByEmail(payload.email);
+    }
+  }
 
   async validateCustomer(
     email: string,

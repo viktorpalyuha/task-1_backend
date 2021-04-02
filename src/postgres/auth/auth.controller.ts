@@ -29,9 +29,9 @@ export class AuthController {
   @UseGuards(AuthGuard('facebook-token'))
   async facebookLogin(@Req() req): Promise<{ JWT_token: string }> {
     try {
+      await this.authService.register(req.customer);
       return await this.authService.login(req.customer);
     } catch (error) {
-      await this.authService.register(req.customer);
       return await this.authService.login(req.customer);
     }
   }

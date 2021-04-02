@@ -16,6 +16,7 @@ export class CustomerService {
 
   async create(customer: Customer) {
     const newCustomer = await this.customersRepository.create(customer);
+
     await this.customersRepository.save(newCustomer);
     return newCustomer;
   }

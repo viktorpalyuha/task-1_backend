@@ -5,23 +5,17 @@ import {
   SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  OnGatewayConnection,
   ConnectedSocket,
 } from '@nestjs/websockets';
 import { Server, Socket } from 'socket.io';
 import { Req, UseGuards } from '@nestjs/common';
 
 @WebSocketGateway({ transports: ['websocket'] })
-export class ChatGateway implements OnGatewayConnection {
+export class ChatGateway {
   @WebSocketServer()
   server: Server;
 
   constructor(private chatService: ChatService) {}
-
-  async handleConnection(socket: Socket) {
-    const user = await this.chatService.getCustomerFromSocket(socket);
-    !user && socket.disconnect();
-  }
 
   @SubscribeMessage('sendMessage')
   @UseGuards(WsJwtGuard)
@@ -31,10 +25,9 @@ export class ChatGateway implements OnGatewayConnection {
     @ConnectedSocket() socket: Socket,
   ) {
     const { customer } = req;
-
+    const newMessage = await this.chatService.saveMessage(message, customer);
     this.server.sockets.emit('receivedMessage', {
-      message,
-      customer,
+      newMessage,
     });
   }
 }

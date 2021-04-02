@@ -41,10 +41,28 @@ describe('ChatGateway', () => {
     chatService = module.get<ChatService>(ChatService);
     gateway = module.get<ChatGateway>(ChatGateway);
     gateway.server = mockServer;
+    gateway.server.sockets = await mockServer.connect(`http://localhost:3000`);
   });
 
   it('should be defined', () => {
     expect(gateway).toBeDefined();
+  });
+
+  it('should emit message to all sockets', async () => {
+    jest.spyOn(chatService, 'saveMessage').mockResolvedValue(mockedMessage);
+
+    spyOn(gateway.server.sockets, 'emit');
+
+    await gateway.messagesListener('mockedSocket', {
+      customer: { full_name: 'Viktor Palyuha' },
+    });
+
+    expect(gateway.server.sockets.emit).toHaveBeenCalledWith(
+      'receivedMessage',
+      {
+        ...mockedMessage,
+      },
+    );
   });
 
   it('should return all messages and emit', async () => {

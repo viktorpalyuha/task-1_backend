@@ -10,7 +10,7 @@ export class Message {
   public content: string;
 
   @ManyToOne(() => Customer)
-  public author: Customer;
+  public author: Partial<Customer>;
 
   @Column({
     type: 'timestamp',

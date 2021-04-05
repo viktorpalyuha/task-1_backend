@@ -19,11 +19,7 @@ export class ChatGateway {
 
   @SubscribeMessage('sendMessage')
   @UseGuards(WsJwtGuard)
-  async messagesListener(
-    @MessageBody() message: string,
-    @Req() req,
-    @ConnectedSocket() socket: Socket,
-  ) {
+  async messagesListener(@MessageBody() message: string, @Req() req) {
     const { customer } = req;
     const newMessage = await this.chatService.saveMessage(message, customer);
     this.server.sockets.emit('receivedMessage', {

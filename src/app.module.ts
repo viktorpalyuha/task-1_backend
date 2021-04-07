@@ -17,7 +17,7 @@ import { PostgresGameManagerModule } from './postgres/game-manager/postgres-game
   imports: [
     RouterModule.forRoutes(routes),
     ConfigModule.forRoot(),
-    MongooseModule.forRoot('mongodb://127.0.0.1:27017/shop', {
+    MongooseModule.forRoot('mongodb://mongo:27017/shop', {
       useNewUrlParser: true,
     }),
     TypeOrmModule.forRoot({

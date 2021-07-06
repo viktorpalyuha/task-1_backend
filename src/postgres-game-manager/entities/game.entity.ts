@@ -10,21 +10,7 @@ import {
 @Entity()
 export class Game {
   @PrimaryGeneratedColumn()
-  id: number;
 
-  @Column({
-    type: 'varchar',
-    length: 150,
-    nullable: false,
-  })
-  name: string;
-
-  @Column({
-    type: 'varchar',
-    length: 150,
-    nullable: false,
-  })
-  img_url: string;
 
   @Column({
     type: 'varchar',

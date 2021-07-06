@@ -54,42 +54,5 @@ export class MongoDatasetService {
     return this.gameModel.find().sort({ price: -1 });
   }
 
-  getTotalAveragePrice(): Aggregate<PriceStatsDto[]> {
-    return this.gameModel.aggregate([
-      { $group: { _id: null, avgPrice: { $avg: '$price' } } },
-      { $project: { _id: 0, avgPrice: { $round: ['$avgPrice', 2] } } },
-    ]);
-  }
 
-  getGamesInPriceRange(range: number): Aggregate<PriceStatsDto[]> {
-    return this.gameModel.aggregate([
-      { $match: { price: { $gte: +range, $lte: +range + 100 } } },
-      { $count: 'numberOfGames' },
-    ]);
-  }
-
-  getStatsByCategory(category: string): Aggregate<CategoryStatsDto[]> {
-    return this.gameModel.aggregate([
-      { $match: { categories: { $regex: category, $options: 'i' } } },
-      {
-        $group: {
-          _id: null,
-          numberOfGames: { $sum: 1 },
-          avgPrice: { $avg: '$price' },
-          highestPrice: { $max: '$price' },
-          lowestPrice: { $min: '$price' },
-        },
-      },
-      {
-        $project: {
-          _id: 0,
-          category: category,
-          numberOfGames: 1,
-          avgPrice: { $round: ['$avgPrice', 2] },
-          highestPrice: 1,
-          lowestPrice: 1,
-        },
-      },
-    ]);
-  }
 }
